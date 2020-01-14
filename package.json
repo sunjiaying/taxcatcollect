@@ -1,0 +1,20 @@
+{
+  "name": "taxcatcollect",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "clear": "node ./main.js --command clear",
+    "sync": "node ./main.js --command sync",
+    "query": "node ./main.js --command query -K 碗"
+  },
+  "author": "sunjoin@qq.com",
+  "license": "ISC",
+  "dependencies": {
+    "arg": "^4.1.2",
+    "jsdom": "^15.2.1",
+    "request": "^2.88.0",
+    "sqlite3": "^4.1.0",
+    "urlencode": "^1.1.0"
+  }
+}
