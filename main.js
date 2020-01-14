@@ -28,7 +28,7 @@ function clear() {
   });
 }
 
-function finished(o) {
+function finished(cxmc, o) {
   console.log(o);
 }
 
