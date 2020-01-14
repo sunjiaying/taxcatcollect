@@ -1,6 +1,9 @@
 var request = require('request');
 var urlencode = require('urlencode');
 
+var finished;
+var key='';
+
 var headers = {
     'Connection': 'keep-alive',
     'Accept': 'application/json, text/plain, */*',
@@ -23,7 +26,10 @@ function callback(error, response, body) {
     if (!error && response.statusCode == 200) {
         // console.log(JSON.parse(body).data);
         if (JSON.parse(body).data.length>0) {
-          console.log(JSON.parse(body).data[0]);
+          // console.log(JSON.parse(body).data[0]);
+          if(finished!=null) {
+            finished(key, JSON.parse(body).data[0])
+          }
         }
         // body.data;
     }
@@ -31,7 +37,9 @@ function callback(error, response, body) {
 
 // request(options, callback);
 
-function ruoruo(keyword) {
+function ruoruo(keyword, f) {
+  finished = f;
+  key = keyword;
   options = {
       url: `https://bmjc.jss.com.cn/global/searchByRecommendatedName.do?_=1578991051762&name=${urlencode(keyword)}`,
       headers: headers,

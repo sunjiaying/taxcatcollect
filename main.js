@@ -28,11 +28,15 @@ function clear() {
   });
 }
 
+function finished(o) {
+  console.log(o);
+}
+
 if (args['--command']==='clear') {
   clear();
 } else if (args['--command']==='sync') {  
   sync(1);
 } else if (args['--command']==='query') {  
-  ruoruo(args['--keyword']);
+  ruoruo(args['--keyword'], finished);
 }
 // sync(4);

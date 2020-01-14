@@ -6,12 +6,14 @@
   "scripts": {
     "clear": "node ./main.js --command clear",
     "sync": "node ./main.js --command sync",
-    "query": "node ./main.js --command query -K 碗"
+    "query": "node ./main.js --command query -K 碗",
+    "webapi": "node ./webapi.js"
   },
   "author": "sunjoin@qq.com",
   "license": "ISC",
   "dependencies": {
     "arg": "^4.1.2",
+    "express": "^4.17.1",
     "jsdom": "^15.2.1",
     "request": "^2.88.0",
     "sqlite3": "^4.1.0",
