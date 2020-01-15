@@ -3,10 +3,10 @@ var chrome = require("selenium-webdriver/chrome");
 
 (async function example() {
   options = new chrome.Options()
-  options.addArguments('–-no-sandbox');
-  options.addArguments('–-disable-dev-shm-usage');
-  options.addArguments('–-headless');
-  options.addArguments('--disable-gpu');
+  options.addArguments('no-sandbox');
+  options.addArguments('disable-dev-shm-usage');
+  options.addArguments('headless');
+  options.addArguments('disable-gpu');
   let driver = await new Builder().setChromeOptions(options).forBrowser('chrome').build();
   try {
     await driver.get('http://www.baidu.com');
