@@ -1,7 +1,12 @@
 const {Builder, By, Key, until} = require('selenium-webdriver');
- 
+var chrome = require("selenium-webdriver/chrome");
+
 (async function example() {
-  let driver = await new Builder().forBrowser('chrome').build();
+  options = new chrome.Options()
+  options.addArguments('–no-sandbox');
+  options.addArguments('–disable-dev-shm-usage');
+  options.addArguments('–headless');
+  let driver = await new Builder().setChromeOptions(options).forBrowser('chrome').build();
   try {
     await driver.get('http://www.baidu.com');
     await driver.findElement(By.name('wd')).sendKeys('webdriver', Key.RETURN);
