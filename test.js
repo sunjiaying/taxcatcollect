@@ -8,11 +8,16 @@ var chrome = require("selenium-webdriver/chrome");
   options.addArguments('headless');
   options.addArguments('disable-gpu');
   let driver = await new Builder().setChromeOptions(options).forBrowser('chrome').build();
+  var s = '';
   try {
-    await driver.get('http://www.baidu.com');
+    await driver.get('https://www.baidu.com');
     await driver.findElement(By.name('wd')).sendKeys('webdriver', Key.RETURN);
-    await driver.wait(until.titleIs('webdriver - Google Search'), 1000);
+    let countResult = await driver.wait(until.elementLocated(By.className('nums_text')), 10000);
+    console.log(await countResult.getText());
+    let firstResult = await driver.wait(until.elementLocated(By.id('1')), 10000);
+    console.log(await firstResult.getText());
   } finally {
     await driver.quit();
+    console.log(s);
   }
 })();
