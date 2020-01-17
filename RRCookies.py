@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.expected_conditions import presence_of_element_located
+from fake_useragent import UserAgent
 
 import time
 
@@ -41,19 +42,28 @@ def regCode(filename):
     except Exception as e:
         print(e)
 
+password = ''
+try:
+    f = open("./password")
+    password = f.readline()
+    f.close()
+except Exception as e:
+    print('没有找到密码文件')
+    
 
 fn = './image.png'
-
+ua = UserAgent()
 options = webdriver.ChromeOptions()
 options.add_argument('no-sandbox')
-# options.add_argument('disable-dev-shm-usage')
-# options.add_argument('headless')
-# options.add_argument('disable-gpu')
+options.add_argument('disable-dev-shm-usage')
+options.add_argument('user-agent="%s"'%ua.random) 
+options.add_argument('headless')
+options.add_argument('disable-gpu')
 
 with webdriver.Chrome(options=options) as driver:
     driver.get('https://u.jss.com.cn/Contents/usercenter/allow/login/login.jsp?redirecturl=bmjc')    
     driver.find_element_by_name('username').send_keys('13825229420')
-    driver.find_element_by_name('password').send_keys('')
+    driver.find_element_by_name('password').send_keys(password)
 
     vcode = ''
     
@@ -74,17 +84,11 @@ with webdriver.Chrome(options=options) as driver:
         driver.find_element_by_xpath("//input[@name='vcode']").click()
         driver.find_element_by_xpath("//input[@name='vcode']").clear()
         driver.find_element_by_xpath("//input[@name='vcode']").send_keys(vcode + Keys.RETURN)
-        # driver.find_element_by_name('vcode').click()
-        # driver.find_element_by_name('vcode').clear()
-        # driver.find_element_by_name('vcode').send_keys(vcode + Keys.RETURN)
         
         time.sleep(1)
         if driver.current_url=='https://u.jss.com.cn/Contents/usercenter/allow/login/login.jsp?redirecturl=bmjc':
             vcode = ''
         elif driver.current_url=='https://bmjc.jss.com.cn/Contents/smartCode/web/index.html#/index':
-            first_result = driver.find_element_by_xpath("//h3[@class='title']")
-            print(first_result.get_attribute('textContent'))
-
             c = ''
             for cookie in driver.get_cookies():
                 a = "%s=%s" % (cookie['name'], cookie['value'])
@@ -93,16 +97,12 @@ with webdriver.Chrome(options=options) as driver:
                 else:
                     c = c + '; ' + a
             print(c)
+            with open('./cookies', 'w') as f:
+                f.write(c)
             break
         else:
             print('正在跳转中...')
-            # print(driver.page_source)
-            c = ''
-            for cookie in driver.get_cookies():
-                a = "%s=%s" % (cookie['name'], cookie['value'])
-                if c == '':
-                    c = a
-                else:
-                    c = c + '; ' + a
-            print(c)
+            print(driver.current_url)
+            print(driver.page_source)
+            print('获取失败')
             break

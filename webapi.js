@@ -1,3 +1,4 @@
+const fs = require('fs')
 const express = require('express');
 var { ruoruo } = require('./ruoruo.js');
 
@@ -8,10 +9,10 @@ var all = 0;
 var result = [];
 
 app.all('*', function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
-  res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
-  res.header("Content-Type", "application/json");
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type,Content-Length, Authorization, Accept,X-Requested-With');
+  res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+  res.header('Content-Type', 'application/json');
   if (req.method === 'OPTIONS') {
     res.sendStatus(200);
   } else {
@@ -29,10 +30,16 @@ app.post('/query', function (req, res) {
     count = 0;
     result = [];    
     all = obj.data.length;
-    // console.log(obj);
-    obj.data.forEach(keyword => {
-      ruoruo(keyword, finished);
-    });
+    fs.readFile('./cookies', 'utf-8', function(error, data) {
+      if (error) {
+        result = {'msg':'cookies获取失败'};
+        count = all;
+      } else {
+        obj.data.forEach(k => {
+          ruoruo(k, finished, data);
+        });
+      }
+    });    
   });
   var inter = setInterval(() => {
     // console.log(count, all);
