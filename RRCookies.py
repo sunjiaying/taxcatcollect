@@ -55,10 +55,10 @@ fn = './image.png'
 ua = UserAgent()
 options = webdriver.ChromeOptions()
 options.add_argument('no-sandbox')
-options.add_argument('disable-dev-shm-usage')
+# options.add_argument('disable-dev-shm-usage')
 options.add_argument('user-agent="%s"'%ua.random) 
 options.add_argument('headless')
-options.add_argument('disable-gpu')
+# options.add_argument('disable-gpu')
 
 with webdriver.Chrome(options=options) as driver:
     driver.get('https://u.jss.com.cn/Contents/usercenter/allow/login/login.jsp?redirecturl=bmjc')    
