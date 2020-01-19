@@ -63,4 +63,4 @@ function finished(cxmc, o) {
   count = count + 1;
 }
 
-app.listen(3003, () => console.log('webapi listening on port http://127.0.0.1:3003/'));
+app.listen(3006, () => console.log('webapi listening on port http://127.0.0.1:3003/'));
